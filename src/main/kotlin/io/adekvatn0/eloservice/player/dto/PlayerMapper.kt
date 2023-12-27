@@ -7,6 +7,4 @@ import org.mapstruct.Mapper
 interface PlayerMapper {
     fun toDto(player: Player): PlayerDto
     fun toEntity(dto: PlayerDto): Player
-    fun toDto(stats: Player.Statistic): PlayerDto.Statistic
-    fun toEntity(stats: PlayerDto.Statistic): Player.Statistic
 }

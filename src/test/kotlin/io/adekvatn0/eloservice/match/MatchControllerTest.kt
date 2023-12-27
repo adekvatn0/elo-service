@@ -41,8 +41,8 @@ class MatchControllerTest : MongoRepositoryContainerTest() {
             MatchResult.WIN
         )
 
-        val p1 = playerRepository.save(Player(player1name, leagueName, 1200, Player.Statistic(9, 2, 8)))
-        val p2 = playerRepository.save(Player(player2name, leagueName, 1400, Player.Statistic(18, 5, 14)))
+        val p1 = playerRepository.save(Player(player1name, leagueName, 1200, 9, 2, 8))
+        val p2 = playerRepository.save(Player(player2name, leagueName, 1400, 18, 5, 14))
 
         leagueRepository.save(League(leagueName, 1500, 16, League.Points(1.0, 0.5, 0.0)))
 
@@ -71,15 +71,15 @@ class MatchControllerTest : MongoRepositoryContainerTest() {
         //verify players
         val p1saved = playerRepository.findById(player1name).get()
         assertThat(p1saved.elo).isEqualTo(p1.elo + expectedDelta)
-        assertThat(p1saved.statistic.wins).isEqualTo(p1.statistic.wins + 1)
-        assertThat(p1saved.statistic.draws).isEqualTo(p1.statistic.draws)
-        assertThat(p1saved.statistic.loses).isEqualTo(p1.statistic.loses)
+        assertThat(p1saved.wins).isEqualTo(p1.wins + 1)
+        assertThat(p1saved.draws).isEqualTo(p1.draws)
+        assertThat(p1saved.loses).isEqualTo(p1.loses)
 
         val p2saved = playerRepository.findById(player2name).get()
         assertThat(p2saved.elo).isEqualTo(p2.elo - expectedDelta)
-        assertThat(p2saved.statistic.wins).isEqualTo(p2.statistic.wins)
-        assertThat(p2saved.statistic.draws).isEqualTo(p2.statistic.draws)
-        assertThat(p2saved.statistic.loses).isEqualTo(p2.statistic.loses + 1)
+        assertThat(p2saved.wins).isEqualTo(p2.wins)
+        assertThat(p2saved.draws).isEqualTo(p2.draws)
+        assertThat(p2saved.loses).isEqualTo(p2.loses + 1)
     }
 
     @Test
@@ -96,8 +96,8 @@ class MatchControllerTest : MongoRepositoryContainerTest() {
             MatchResult.DRAW
         )
 
-        val p1 = playerRepository.save(Player(player1name, leagueName, 1200, Player.Statistic(9, 2, 8)))
-        val p2 = playerRepository.save(Player(player2name, leagueName, 1400, Player.Statistic(18, 5, 14)))
+        val p1 = playerRepository.save(Player(player1name, leagueName, 1200, 9, 2, 8))
+        val p2 = playerRepository.save(Player(player2name, leagueName, 1400, 18, 5, 14))
 
         leagueRepository.save(League(leagueName, 1500, 16, League.Points(1.0, 0.5, 0.0)))
 
@@ -125,15 +125,15 @@ class MatchControllerTest : MongoRepositoryContainerTest() {
         //verify players
         val p1saved = playerRepository.findById(player1name).get()
         assertThat(p1saved.elo).isEqualTo(p1.elo + expectedDelta)
-        assertThat(p1saved.statistic.wins).isEqualTo(p1.statistic.wins)
-        assertThat(p1saved.statistic.draws).isEqualTo(p1.statistic.draws + 1)
-        assertThat(p1saved.statistic.loses).isEqualTo(p1.statistic.loses)
+        assertThat(p1saved.wins).isEqualTo(p1.wins)
+        assertThat(p1saved.draws).isEqualTo(p1.draws + 1)
+        assertThat(p1saved.loses).isEqualTo(p1.loses)
 
         val p2saved = playerRepository.findById(player2name).get()
         assertThat(p2saved.elo).isEqualTo(p2.elo - expectedDelta)
-        assertThat(p2saved.statistic.wins).isEqualTo(p2.statistic.wins)
-        assertThat(p2saved.statistic.draws).isEqualTo(p2.statistic.draws + 1)
-        assertThat(p2saved.statistic.loses).isEqualTo(p2.statistic.loses)
+        assertThat(p2saved.wins).isEqualTo(p2.wins)
+        assertThat(p2saved.draws).isEqualTo(p2.draws + 1)
+        assertThat(p2saved.loses).isEqualTo(p2.loses)
     }
 
     @Test
@@ -150,8 +150,8 @@ class MatchControllerTest : MongoRepositoryContainerTest() {
             MatchResult.LOSE
         )
 
-        val p1 = playerRepository.save(Player(player1name, leagueName, 1200, Player.Statistic(9, 2, 8)))
-        val p2 = playerRepository.save(Player(player2name, leagueName, 1400, Player.Statistic(18, 5, 14)))
+        val p1 = playerRepository.save(Player(player1name, leagueName, 1200, 9, 2, 8))
+        val p2 = playerRepository.save(Player(player2name, leagueName, 1400, 18, 5, 14))
 
         leagueRepository.save(League(leagueName, 1500, 16, League.Points(1.0, 0.5, 0.0)))
 
@@ -179,15 +179,15 @@ class MatchControllerTest : MongoRepositoryContainerTest() {
         //verify players
         val p1saved = playerRepository.findById(player1name).get()
         assertThat(p1saved.elo).isEqualTo(p1.elo + expectedDelta)
-        assertThat(p1saved.statistic.wins).isEqualTo(p1.statistic.wins)
-        assertThat(p1saved.statistic.draws).isEqualTo(p1.statistic.draws)
-        assertThat(p1saved.statistic.loses).isEqualTo(p1.statistic.loses + 1)
+        assertThat(p1saved.wins).isEqualTo(p1.wins)
+        assertThat(p1saved.draws).isEqualTo(p1.draws)
+        assertThat(p1saved.loses).isEqualTo(p1.loses + 1)
 
         val p2saved = playerRepository.findById(player2name).get()
         assertThat(p2saved.elo).isEqualTo(p2.elo - expectedDelta)
-        assertThat(p2saved.statistic.wins).isEqualTo(p2.statistic.wins + 1)
-        assertThat(p2saved.statistic.draws).isEqualTo(p2.statistic.draws)
-        assertThat(p2saved.statistic.loses).isEqualTo(p2.statistic.loses)
+        assertThat(p2saved.wins).isEqualTo(p2.wins + 1)
+        assertThat(p2saved.draws).isEqualTo(p2.draws)
+        assertThat(p2saved.loses).isEqualTo(p2.loses)
     }
 
     @Test
@@ -265,7 +265,7 @@ class MatchControllerTest : MongoRepositoryContainerTest() {
             MatchResult.WIN
         )
 
-        playerRepository.save(Player(player1name, leagueName, 1200, Player.Statistic(9, 2, 8)))
+        playerRepository.save(Player(player1name, leagueName, 1200, 9, 2, 8))
         leagueRepository.save(League(leagueName, 1500, 16, League.Points(1.0, 0.5, 0.0)))
 
         //test

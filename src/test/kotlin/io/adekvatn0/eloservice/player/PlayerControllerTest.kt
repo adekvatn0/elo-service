@@ -63,7 +63,7 @@ class PlayerControllerTest : MongoRepositoryContainerTest() {
                         objectMapper.writeValueAsString(
                             Result.success(
                                 listOf(
-                                    PlayerDto("name5", league, 5, PlayerDto.Statistic()),
+                                    PlayerDto("name5", league, 5),
                                     PlayerDto("name4", league, 4),
                                     PlayerDto("name3", league, 3),
                                     PlayerDto("name2", league, 2)

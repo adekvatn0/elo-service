@@ -9,11 +9,7 @@ data class Player(
     val name: String,
     val league: String,
     val elo: Int = 0,
-    val statistic: Statistic = Statistic()
-) {
-    data class Statistic(
-        val wins: Int = 0,
-        val loses: Int = 0,
-        val draws: Int = 0
-    )
-}
+    val wins: Int = 0,
+    val loses: Int = 0,
+    val draws: Int = 0,
+)

@@ -56,8 +56,8 @@ class MatchService(
             MatchResult.WIN -> {
                 playerRepository.saveAll(
                     listOf(
-                        p1.copy(elo = p1.elo + delta, statistic = p1.statistic.copy(wins = p1.statistic.wins + 1)),
-                        p2.copy(elo = p2.elo - delta, statistic = p2.statistic.copy(loses = p2.statistic.loses + 1))
+                        p1.copy(elo = p1.elo + delta, wins = p1.wins + 1),
+                        p2.copy(elo = p2.elo - delta, loses = p2.loses + 1)
                     )
                 )
             }
@@ -65,8 +65,8 @@ class MatchService(
             MatchResult.DRAW -> {
                 playerRepository.saveAll(
                     listOf(
-                        p1.copy(elo = p1.elo + delta, statistic = p1.statistic.copy(draws = p1.statistic.draws + 1)),
-                        p2.copy(elo = p2.elo - delta, statistic = p2.statistic.copy(draws = p2.statistic.draws + 1))
+                        p1.copy(elo = p1.elo + delta, draws = p1.draws + 1),
+                        p2.copy(elo = p2.elo - delta, draws = p2.draws + 1)
                     )
                 )
             }
@@ -74,8 +74,8 @@ class MatchService(
             MatchResult.LOSE -> {
                 playerRepository.saveAll(
                     listOf(
-                        p1.copy(elo = p1.elo + delta, statistic = p1.statistic.copy(loses = p1.statistic.loses + 1)),
-                        p2.copy(elo = p2.elo - delta, statistic = p2.statistic.copy(wins = p2.statistic.wins + 1))
+                        p1.copy(elo = p1.elo + delta, loses = p1.loses + 1),
+                        p2.copy(elo = p2.elo - delta, wins = p2.wins + 1)
                     )
                 )
             }
