@@ -69,13 +69,13 @@ class MatchControllerTest : MongoRepositoryContainerTest() {
         assertThat(matchDto.timestamp).isNotNull()
 
         //verify players
-        val p1saved = playerRepository.findById(player1name).get()
+        val p1saved = playerRepository.findByLeagueAndName(leagueName, player1name).get()
         assertThat(p1saved.elo).isEqualTo(p1.elo + expectedDelta)
         assertThat(p1saved.wins).isEqualTo(p1.wins + 1)
         assertThat(p1saved.draws).isEqualTo(p1.draws)
         assertThat(p1saved.loses).isEqualTo(p1.loses)
 
-        val p2saved = playerRepository.findById(player2name).get()
+        val p2saved = playerRepository.findByLeagueAndName(leagueName, player2name).get()
         assertThat(p2saved.elo).isEqualTo(p2.elo - expectedDelta)
         assertThat(p2saved.wins).isEqualTo(p2.wins)
         assertThat(p2saved.draws).isEqualTo(p2.draws)
@@ -123,13 +123,13 @@ class MatchControllerTest : MongoRepositoryContainerTest() {
         assertThat(matchDto.timestamp).isNotNull()
 
         //verify players
-        val p1saved = playerRepository.findById(player1name).get()
+        val p1saved = playerRepository.findByLeagueAndName(leagueName, player1name).get()
         assertThat(p1saved.elo).isEqualTo(p1.elo + expectedDelta)
         assertThat(p1saved.wins).isEqualTo(p1.wins)
         assertThat(p1saved.draws).isEqualTo(p1.draws + 1)
         assertThat(p1saved.loses).isEqualTo(p1.loses)
 
-        val p2saved = playerRepository.findById(player2name).get()
+        val p2saved = playerRepository.findByLeagueAndName(leagueName, player2name).get()
         assertThat(p2saved.elo).isEqualTo(p2.elo - expectedDelta)
         assertThat(p2saved.wins).isEqualTo(p2.wins)
         assertThat(p2saved.draws).isEqualTo(p2.draws + 1)
@@ -177,13 +177,13 @@ class MatchControllerTest : MongoRepositoryContainerTest() {
         assertThat(matchDto.timestamp).isNotNull()
 
         //verify players
-        val p1saved = playerRepository.findById(player1name).get()
+        val p1saved = playerRepository.findByLeagueAndName(leagueName, player1name).get()
         assertThat(p1saved.elo).isEqualTo(p1.elo + expectedDelta)
         assertThat(p1saved.wins).isEqualTo(p1.wins)
         assertThat(p1saved.draws).isEqualTo(p1.draws)
         assertThat(p1saved.loses).isEqualTo(p1.loses + 1)
 
-        val p2saved = playerRepository.findById(player2name).get()
+        val p2saved = playerRepository.findByLeagueAndName(leagueName, player2name).get()
         assertThat(p2saved.elo).isEqualTo(p2.elo - expectedDelta)
         assertThat(p2saved.wins).isEqualTo(p2.wins + 1)
         assertThat(p2saved.draws).isEqualTo(p2.draws)

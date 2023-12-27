@@ -35,7 +35,7 @@ class MatchService(
 
     @Transactional
     fun createMatch(matchDto: MatchDto): Result<MatchDto> {
-        val league = leagueRepository.findById(matchDto.league).getOrNull()
+        val league = leagueRepository.findByName(matchDto.league).getOrNull()
             ?: return Result.error("League ${matchDto.league} does not exists")
 
         val p1 = playerRepository.findByLeagueAndName(matchDto.league, matchDto.player1).getOrNull()

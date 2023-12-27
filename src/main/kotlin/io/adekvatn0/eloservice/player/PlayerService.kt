@@ -32,7 +32,7 @@ class PlayerService(
         .map {
             Result.error<PlayerDto>("Player with name ${dto.name} in league ${dto.league} already exists")
         }.orElseGet {
-            val league = leagueRepository.findById(dto.league)
+            val league = leagueRepository.findByName(dto.league)
             if (!league.isPresent) {
                 return@orElseGet Result.error("League ${dto.league} does not exists")
             }

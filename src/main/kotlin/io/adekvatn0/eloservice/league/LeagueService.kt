@@ -14,7 +14,7 @@ class LeagueService(
     private val mapper: LeagueMapper
 ) {
 
-    fun createLeague(leagueDto: LeagueDto): Result<LeagueDto> = leagueRepository.findById(leagueDto.name)
+    fun createLeague(leagueDto: LeagueDto): Result<LeagueDto> = leagueRepository.findByName(leagueDto.name)
         .map {
             Result.error<LeagueDto>("League with name ${leagueDto.name} already exists")
         }.orElseGet {
@@ -39,7 +39,7 @@ class LeagueService(
             Result.success(mapper.toDto(saved))
         }
 
-    fun getLeague(name: String): Result<LeagueDto> = leagueRepository.findById(name)
+    fun getLeague(name: String): Result<LeagueDto> = leagueRepository.findByName(name)
         .map {
             Result.success(mapper.toDto(it))
         }.orElseGet {

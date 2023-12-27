@@ -2,6 +2,7 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/elo
+      auto-index-creation: true
 
 league:
   initial-elo: 1400

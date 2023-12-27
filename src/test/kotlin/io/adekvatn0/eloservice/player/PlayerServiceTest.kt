@@ -54,7 +54,7 @@ class PlayerServiceTest {
 
         //mocks
         val leagueRepo = mock<LeagueRepository> {
-            on { findById(leagueName) } doReturn Optional.of(
+            on { findByName(leagueName) } doReturn Optional.of(
                 League(
                     leagueName,
                     leagueInitialElo,
@@ -64,7 +64,7 @@ class PlayerServiceTest {
             )
         }
         val playerRepo = mock<PlayerRepository> {
-            on { findById(name) } doReturn Optional.empty()
+            on { findByLeagueAndName(leagueName, name) } doReturn Optional.empty()
             on { save(player) } doReturn player
         }
         val mapper = mock<PlayerMapper> {
@@ -80,7 +80,7 @@ class PlayerServiceTest {
         assertEquals(PlayerDto(name, leagueName), result.entity)
         assertEquals(null, result.details)
 
-        verify(leagueRepo, times(1)).findById(leagueName)
+        verify(leagueRepo, times(1)).findByName(leagueName)
         verify(playerRepo, times(1)).findByLeagueAndName(leagueName, name)
         verify(playerRepo, times(1)).save(player)
         verify(mapper, times(1)).toDto(player)
@@ -99,7 +99,7 @@ class PlayerServiceTest {
 
         //mocks
         val leagueRepo = mock<LeagueRepository> {
-            on { findById(leagueName) } doReturn Optional.of(
+            on { findByName(leagueName) } doReturn Optional.of(
                 League(
                     leagueName,
                     leagueInitialElo,
@@ -133,7 +133,7 @@ class PlayerServiceTest {
 
         //mocks
         val leagueRepo = mock<LeagueRepository> {
-            on { findById(leagueName) } doReturn Optional.empty()
+            on { findByName(leagueName) } doReturn Optional.empty()
         }
         val playerRepo = mock<PlayerRepository> {
             on { findByLeagueAndName(leagueName, name) } doReturn Optional.empty()
@@ -149,7 +149,7 @@ class PlayerServiceTest {
         assertEquals("League $leagueName does not exists", result.details)
 
         verify(playerRepo, times(1)).findByLeagueAndName(leagueName, name)
-        verify(leagueRepo, times(1)).findById(leagueName)
+        verify(leagueRepo, times(1)).findByName(leagueName)
 
         verifyNoMoreInteractions(leagueRepo, playerRepo, mapper)
     }
