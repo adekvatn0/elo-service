@@ -24,7 +24,7 @@ class PlayerControllerTest : MongoRepositoryContainerTest() {
     val objectMapper = ObjectMapper()
 
     @Test
-    fun findPlayerByNameThanSuccess() {
+    fun findPlayerByNameThenSuccess() {
         val name = "name"
         val league = "league"
         val elo = 1234
@@ -47,7 +47,7 @@ class PlayerControllerTest : MongoRepositoryContainerTest() {
     }
 
     @Test
-    fun findPlayersSortedAndPagedThanSuccess() {
+    fun findPlayersSortedAndPagedThenSuccess() {
         val league = "league"
 
         repeat(10) {
@@ -76,7 +76,7 @@ class PlayerControllerTest : MongoRepositoryContainerTest() {
     }
 
     @Test
-    fun findPlayersDefaultPageAndSizeThanTopTen() {
+    fun findPlayersDefaultPageAndSizeThenTopTen() {
         val league = "league"
 
         repeat(20) {
@@ -111,7 +111,7 @@ class PlayerControllerTest : MongoRepositoryContainerTest() {
     }
 
     @Test
-    fun findPlayerByNameAndNoUserExistThanError() {
+    fun findPlayerByNameAndNoUserExistThenError() {
         val name = "name"
         val league = "league"
 
@@ -130,7 +130,7 @@ class PlayerControllerTest : MongoRepositoryContainerTest() {
     }
 
     @Test
-    fun createPlayerThanSuccess() {
+    fun createPlayerThenSuccess() {
         val leagueName = "league"
         val initialElo = 1500
         val name = "name"
@@ -169,7 +169,7 @@ class PlayerControllerTest : MongoRepositoryContainerTest() {
     }
 
     @Test
-    fun createPlayerAndNameIsOccupiedThanError() {
+    fun createPlayerAndNameIsOccupiedThenError() {
         val name = "name"
         val league = "league"
 

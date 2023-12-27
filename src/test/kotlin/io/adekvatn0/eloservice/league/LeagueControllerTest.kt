@@ -22,7 +22,7 @@ class LeagueControllerTest : MongoRepositoryContainerTest() {
     val objectMapper = ObjectMapper()
 
     @Test
-    fun getLeagueThanSuccess() {
+    fun getLeagueThenSuccess() {
         val name = "league"
         val initialElo = 1500
 
@@ -51,7 +51,7 @@ class LeagueControllerTest : MongoRepositoryContainerTest() {
     }
 
     @Test
-    fun getLeagueNotExistsThanError() {
+    fun getLeagueNotExistsThenError() {
         val name = "random"
 
         //test
@@ -70,7 +70,7 @@ class LeagueControllerTest : MongoRepositoryContainerTest() {
     }
 
     @Test
-    fun createLeagueThanSuccess() {
+    fun createLeagueThenSuccess() {
         val name = "name"
         val elo = 1500
         val kfactor = 16
@@ -97,7 +97,7 @@ class LeagueControllerTest : MongoRepositoryContainerTest() {
     }
 
     @Test
-    fun createLeagueAndNameIsOccupiedThanError() {
+    fun createLeagueAndNameIsOccupiedThenError() {
         val name = "name"
         val elo = 1500
         val kfactor = 16

@@ -15,7 +15,7 @@ import java.util.*
 class PlayerServiceTest {
 
     @Test
-    fun findPlayerThanSuccess() {
+    fun findPlayerThenSuccess() {
         val name = "player"
         val leagueName = "league"
         val elo = 500
@@ -46,7 +46,7 @@ class PlayerServiceTest {
     }
 
     @Test
-    fun createPlayerThanSuccess() {
+    fun createPlayerThenSuccess() {
         val name = "player"
         val leagueName = "league"
         val leagueInitialElo = 1500
@@ -91,7 +91,7 @@ class PlayerServiceTest {
 
 
     @Test
-    fun createPlayerAndNameIsOccupiedThanError() {
+    fun createPlayerAndNameIsOccupiedThenError() {
         val name = "player"
         val leagueName = "league"
         val leagueInitialElo = 1500
@@ -127,10 +127,9 @@ class PlayerServiceTest {
     }
 
     @Test
-    fun createPlayerAndLeagueNotExistsThanError() {
+    fun createPlayerAndLeagueNotExistsThenError() {
         val name = "player"
         val leagueName = "league"
-        val player = Player(name, leagueName)
 
         //mocks
         val leagueRepo = mock<LeagueRepository> {

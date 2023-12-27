@@ -1,6 +1,7 @@
 package io.adekvatn0.eloservice
 
 import io.adekvatn0.eloservice.league.repo.LeagueRepository
+import io.adekvatn0.eloservice.match.repo.MatchRepository
 import io.adekvatn0.eloservice.player.repo.PlayerRepository
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
@@ -23,10 +24,14 @@ class MongoRepositoryContainerTest {
     @Autowired
     lateinit var leagueRepository: LeagueRepository
 
+    @Autowired
+    lateinit var matchRepository: MatchRepository
+
     @BeforeEach
     fun clean() {
         playerRepository.deleteAll()
         leagueRepository.deleteAll()
+        matchRepository.deleteAll()
     }
 
     companion object {

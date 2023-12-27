@@ -12,7 +12,6 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.ZonedDateTime
 import kotlin.jvm.optionals.getOrNull
 
 @Service
@@ -24,10 +23,11 @@ class MatchService(
     private val mapper: MatchMapper
 ) {
 
-    fun findMatchesForPlayer(name: String, page: Int, size: Int): Result<List<MatchDto>> {
-        val matches = matchRepository.findAllByPlayer1OrPlayer2(
+    fun findMatchesForPlayer(league: String, name: String, page: Int, size: Int): Result<List<MatchDto>> {
+        val matches = matchRepository.findAllByPlayerAndLeague(
+            league,
             name,
-            PageRequest.of(page, size, Sort.by("date").descending())
+            PageRequest.of(page, size, Sort.by("timestamp").descending())
         )
 
         return Result.success(matches.map { mapper.toDto(it) }.toList())
@@ -41,7 +41,7 @@ class MatchService(
         val p1 = playerRepository.findByLeagueAndName(matchDto.league, matchDto.player1).getOrNull()
             ?: return Result.error("Player ${matchDto.player1} does not exists")
 
-        val p2 = playerRepository.findByLeagueAndName(matchDto.league, matchDto.player1).getOrNull()
+        val p2 = playerRepository.findByLeagueAndName(matchDto.league, matchDto.player2).getOrNull()
             ?: return Result.error("Player ${matchDto.player2} does not exists")
 
         val points = when (matchDto.result) {
@@ -57,7 +57,7 @@ class MatchService(
                 playerRepository.saveAll(
                     listOf(
                         p1.copy(elo = p1.elo + delta, statistic = p1.statistic.copy(wins = p1.statistic.wins + 1)),
-                        p2.copy(elo = p2.elo - delta, statistic = p1.statistic.copy(loses = p2.statistic.loses + 1))
+                        p2.copy(elo = p2.elo - delta, statistic = p2.statistic.copy(loses = p2.statistic.loses + 1))
                     )
                 )
             }
@@ -66,7 +66,7 @@ class MatchService(
                 playerRepository.saveAll(
                     listOf(
                         p1.copy(elo = p1.elo + delta, statistic = p1.statistic.copy(draws = p1.statistic.draws + 1)),
-                        p2.copy(elo = p2.elo - delta, statistic = p1.statistic.copy(draws = p2.statistic.draws + 1))
+                        p2.copy(elo = p2.elo - delta, statistic = p2.statistic.copy(draws = p2.statistic.draws + 1))
                     )
                 )
             }
@@ -75,14 +75,17 @@ class MatchService(
                 playerRepository.saveAll(
                     listOf(
                         p1.copy(elo = p1.elo + delta, statistic = p1.statistic.copy(loses = p1.statistic.loses + 1)),
-                        p2.copy(elo = p2.elo - delta, statistic = p1.statistic.copy(wins = p2.statistic.wins + 1))
+                        p2.copy(elo = p2.elo - delta, statistic = p2.statistic.copy(wins = p2.statistic.wins + 1))
                     )
                 )
             }
         }
 
         val match = mapper.toEntity(matchDto)
-            .copy(date = ZonedDateTime.now())
+            .copy(
+                timestamp = System.currentTimeMillis(),
+                eloDelta = delta
+            )
 
         val saved = matchRepository.save(match)
 

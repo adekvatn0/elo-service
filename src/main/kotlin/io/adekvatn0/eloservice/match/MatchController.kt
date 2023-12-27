@@ -5,19 +5,19 @@ import io.adekvatn0.eloservice.match.dto.MatchDto
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/league/{league}/matches")
+@RequestMapping("/leagues/{league}/matches")
 class MatchController(
     private val matchService: MatchService
 ) {
 
     @GetMapping
     fun findMatchesForPlayer(
+        @PathVariable league: String,
         @RequestParam(required = false) name: String,
         @RequestParam(required = false) page: Int = 0,
         @RequestParam(required = false) size: Int = 10,
-        @PathVariable league: String,
     ): Result<List<MatchDto>> {
-        return matchService.findMatchesForPlayer(name, page, size)
+        return matchService.findMatchesForPlayer(league, name, page, size)
     }
 
     @PostMapping
