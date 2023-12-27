@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://elo:eloVasya137@localhost:27017/elo
+      uri: mongodb://localhost:27017/elo
 
 league:
   initial-elo: 1400
