@@ -1,0 +1,16 @@
+version: "3"
+services:
+  mongo:
+    image: mongo:7.0.4
+    ports:
+      - "27017:27017"
+    volumes:
+      - /usr/local/mongo-elo:/data/db
+  elo:
+    build: .
+    ports:
+      - "80:8080"
+    environment:
+      - MONGO_HOST=mongo
+    depends_on:
+      - mongo
