@@ -5,6 +5,7 @@ import io.adekvatn0.eloservice.dto.Result
 import io.adekvatn0.eloservice.league.dto.LeagueDto
 import io.adekvatn0.eloservice.league.dto.LeagueMapper
 import io.adekvatn0.eloservice.league.repo.LeagueRepository
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 
 @Service
@@ -13,6 +14,18 @@ class LeagueService(
     private val leagueProps: LeagueProperties,
     private val mapper: LeagueMapper
 ) {
+
+    fun findLeagues(name: String?, page: Int, size: Int) = name?.let {
+        leagueRepository.findByName(name)
+            .map {
+                Result.success(listOf(mapper.toDto(it)))
+            }.orElseGet {
+                Result.error("League $name not found")
+            }
+    } ?: run {
+        val leagues = leagueRepository.findAll(PageRequest.of(page, size))
+        Result.success(leagues.map { mapper.toDto(it) }.toList())
+    }
 
     fun createLeague(leagueDto: LeagueDto): Result<LeagueDto> = leagueRepository.findByName(leagueDto.name)
         .map {
@@ -32,17 +45,9 @@ class LeagueService(
                 )
             }
 
-
             val league = mapper.toEntity(leagueDto)
 
             val saved = leagueRepository.save(league)
             Result.success(mapper.toDto(saved))
-        }
-
-    fun getLeague(name: String): Result<LeagueDto> = leagueRepository.findByName(name)
-        .map {
-            Result.success(mapper.toDto(it))
-        }.orElseGet {
-            Result.error("League $name not found")
         }
 }

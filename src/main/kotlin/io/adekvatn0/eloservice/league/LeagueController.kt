@@ -11,10 +11,12 @@ class LeagueController(
 ) {
 
     @GetMapping
-    fun getLeague(
-        @RequestParam name: String
-    ): Result<LeagueDto> {
-        return leagueService.getLeague(name)
+    fun findLeagues(
+        @RequestParam(required = false) name: String?,
+        @RequestParam(required = false) page: Int = 0,
+        @RequestParam(required = false) size: Int = 10,
+    ): Result<List<LeagueDto>> {
+        return leagueService.findLeagues(name, page, size)
     }
 
     @PostMapping
@@ -23,5 +25,4 @@ class LeagueController(
     ): Result<LeagueDto> {
         return leagueService.createLeague(request)
     }
-
 }

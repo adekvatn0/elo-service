@@ -22,7 +22,7 @@ class LeagueControllerTest : MongoRepositoryContainerTest() {
     val objectMapper = ObjectMapper()
 
     @Test
-    fun getLeagueThenSuccess() {
+    fun getLeagueByNameThenSuccess() {
         val name = "league"
         val initialElo = 1500
 
@@ -37,11 +37,13 @@ class LeagueControllerTest : MongoRepositoryContainerTest() {
                     json(
                         objectMapper.writeValueAsString(
                             Result.success(
-                                LeagueDto(
-                                    name,
-                                    initialElo,
-                                    16,
-                                    LeagueDto.Points(1.0, 0.5, 0.0)
+                                listOf(
+                                    LeagueDto(
+                                        name,
+                                        initialElo,
+                                        16,
+                                        LeagueDto.Points(1.0, 0.5, 0.0)
+                                    )
                                 )
                             )
                         )
@@ -49,6 +51,48 @@ class LeagueControllerTest : MongoRepositoryContainerTest() {
                 }
             }
     }
+    @Test
+    fun getLeaguesThenSuccess() {
+        leagueRepository.save(League("name1", 1000, 8, League.Points(1.0, 0.5, 0.0)))
+        leagueRepository.save(League("name2", 2000, 16, League.Points(1.0, 0.0, -1.0)))
+        leagueRepository.save(League("name3", 1400, 32, League.Points(16.0, 0.0, -16.0)))
+
+        //test
+        mockMvc.get("/leagues")
+            .andExpect {
+                status { isOk() }
+                content { contentType(MediaType.APPLICATION_JSON) }
+                content {
+                    json(
+                        objectMapper.writeValueAsString(
+                            Result.success(
+                                listOf(
+                                    LeagueDto(
+                                        "name1",
+                                        1000,
+                                        8,
+                                        LeagueDto.Points(1.0, 0.5, 0.0)
+                                    ),
+                                    LeagueDto(
+                                        "name2",
+                                        2000,
+                                        16,
+                                        LeagueDto.Points(1.0, 0.0, -1.0)
+                                    ),
+                                    LeagueDto(
+                                        "name3",
+                                        1400,
+                                        32,
+                                        LeagueDto.Points(16.0, 0.0, -16.0)
+                                    )
+                                )
+                            )
+                        )
+                    )
+                }
+            }
+    }
+
 
     @Test
     fun getLeagueNotExistsThenError() {
